@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <title>My page</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no">
+    <script src="https://unpkg.com/react@latest/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@material-ui/core/umd/material-ui.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+            integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body {
+
+        }
+
+        .grid {
+            /* Grid Fallback */
+            display: flex;
+            flex-wrap: wrap;
+
+            /* Supports Grid */
+            display: grid;
+            grid-template-columns: repeat(4, minmax(150px, 1fr));
+            grid-auto-rows: minmax(150px, auto);
+            grid-gap: 1em;
+            max-width: 896px;
+        }
+
+        .module {
+            /* Demo-Specific Styles */
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 180px;
+
+            /* Flex Fallback */
+            margin-left: 5px;
+            margin-right: 5px;
+            flex: 1 1 200px;
+            border: 2px solid deeppink;
+        }
+
+        /* If Grid is supported, remove the margin we set for the fallback */
+        @supports (display: grid) {
+            .module {
+                margin: 0;
+            }
+        }
+
+        @media print {
+            .no-print, .no-print * {
+                visibility: hidden !important;
+            }
+
+            .grid {
+                margin-top: 50px;
+            }
+        }
+
+        #shuffle {
+            width: 100px;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <div class="container">
+        <button id="shuffle" class="no-print">חדש</button>
+        <button id="showall" class="no-print">הכל</button>
+
+    </div>
+    <div id="root"></div>
+</center>
+
+<script type="text/babel">
+    Array.prototype.shuffle = function () {
+        const copy = this.slice(0);
+        var i = copy.length, j, temp;
+        if (i == 0) return copy;
+        while (--i) {
+            j = Math.floor(Math.random() * (i + 1));
+            temp = copy[i];
+            copy[i] = copy[j];
+            copy[j] = temp;
+        }
+        return copy;
+    };
+
+    const princesses = [
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/7/72/01_Snow_White.jpg/revision/latest/scale-to-width-down/180?cb=20180821054939",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/b/bf/02_Cinderella.jpg/revision/latest/scale-to-width-down/262?cb=20180308194724",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/c/cd/03_Aurora.jpg/revision/latest/scale-to-width-down/250?cb=20180308194936",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/0/07/04_Ariel.jpg/revision/latest/scale-to-width-down/250?cb=20180821054727",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/7/76/05_Belle.jpg/revision/latest/scale-to-width-down/258?cb=20180308195136",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/5/5b/06_Jasmine.jpg/revision/latest/scale-to-width-down/200?cb=20180308195212",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/3/3d/07_Pocahontas.png/revision/latest/scale-to-width-down/195?cb=20180308195752",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/5/56/08_Mulan.jpg/revision/latest/scale-to-width-down/214?cb=20180308195807",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/4/4f/09_Tiana.jpg/revision/latest/scale-to-width-down/278?cb=20180308200422",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/b/b6/10_Rapunzel.jpg/revision/latest/scale-to-width-down/258?cb=20180821143243",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/f/f7/11_Merida.png/revision/latest/scale-to-width-down/258?cb=20180308200803",
+        "https://vignette.wikia.nocookie.net/disneyprincess/images/f/f5/Moana.png/revision/latest/scale-to-width-down/370?cb=20190424173523",
+        "https://www.freeiconspng.com/uploads/disney-frozen-anna-transparent-frozen-disney-anna-pictures-18.png",
+        "https://gallery.yopriceville.com/var/resizes/Free-Clipart-Pictures/Cartoons-PNG/Transparent_Elsa_Frozen_PNG_Clipart.png?m=1507172104",
+        "https://cdn-images-1.medium.com/max/1181/1*NwlLWsNGp6fTiZxGLAPZNA.png",
+        "https://vignette.wikia.nocookie.net/disney/images/7/7c/Tinkerbell.png/revision/latest?cb=20150729005207",
+        "http://pluspng.com/img-png/elsa-and-anna-png-elsa-y-anna-png-by-xdrawisong-865.png",
+        "https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/741927",
+        "https://www.sccpre.cat/mypng/detail/23-238047_crown-clipart-magic-magic-fairy-wand-png.png",
+        "https://www.nicepng.com/png/full/159-1596712_princess-castle-svg-scrapbook-cut-file-cute-clipart.png",
+        "http://clipart-library.com/images/8TGbAMgqc.png"
+    ]
+
+    class Index extends React.Component {
+        state = {
+            index: 0,
+            imagesToShow: 16
+        }
+        componentDidMount = () => {
+            document.getElementById('shuffle').addEventListener('click', () => {
+                this.setState({
+                    random: Math.random(),
+                    index: this.state.index + 1
+                })
+            });
+            document.getElementById('showall').addEventListener('click', () => {
+                this.setState({
+                    imagesToShow: princesses.length
+                })
+            })
+        }
+
+        render() {
+            return <div>
+                <h1 id="title">{this.state.index}</h1>
+                <div className="grid">
+                    {
+                        princesses.shuffle().slice(0, this.state.imagesToShow).map(p => <div className="module"><img
+                            style={{height: '98%', width: 'auto', maxWidth: '100%'}}
+                            src={p}/></div>)
+                    }
+                </div>
+            </div>
+
+        }
+    }
+
+    ReactDOM.render(<Index/>, document.getElementById('root'));
+</script>
+</body>
+</html>

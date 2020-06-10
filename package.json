@@ -1,0 +1,26 @@
+{
+  "name": "bingo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "async": "^3.0.1",
+    "async-es": "^3.0.1",
+    "puppeteer": "^1.17.0"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.4.5",
+    "easy-pdf-merge": "^0.2.1",
+    "pdf-image": "^2.0.0",
+    "pdf-officegen": "^2.0.3",
+    "pdf-to-png": "^1.0.3"
+  }
+}
