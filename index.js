@@ -29,14 +29,15 @@ const printAll = async (page) => {
 const mergePromisified = util.promisify(merge);
 
 (async () => {
-    const browser = await puppeteer.launch({headless: true, args: ['--start-fullscreen']});
+    const browser = await puppeteer.launch({headless: false, args: ['--start-fullscreen']});
     const page = await browser.newPage();
     await page.setViewport({width: 2000, height: 2000});
     await page.goto('http://localhost:63342/bingo/index.html');
     await page.emulateMedia('print');
     const pdfs = [];
-    for (let i = 0 ; i < 20 ; i++) {
-        const pdfName = `png/${i}.png`;
+    let index = 1;
+    for (pdf of pdfs) {
+        const pdfName = `png/${index}.png`;
         pdfs.push(pdfName)
         await print(page, pdfName);
     }

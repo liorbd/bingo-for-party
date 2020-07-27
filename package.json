@@ -14,7 +14,7 @@
     "@babel/node": "^7.4.5",
     "async": "^3.0.1",
     "async-es": "^3.0.1",
-    "puppeteer": "^1.17.0"
+    "puppeteer": "^1.20.0"
   },
   "dependencies": {
     "@babel/preset-env": "^7.4.5",
